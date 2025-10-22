@@ -6,7 +6,7 @@ const addNoteHandler = (request, h) => {
 
   const id = nanoid(16);
   const createdAt = new Date().toISOString();
-  const updateAt = createdAt;
+  const updatedAt = createdAt;
 
   const newNote = {
     title,
@@ -14,7 +14,7 @@ const addNoteHandler = (request, h) => {
     body,
     id,
     createdAt,
-    updateAt,
+    updatedAt,
   };
 
   notes.push(newNote);
@@ -24,7 +24,7 @@ const addNoteHandler = (request, h) => {
   if (isSuccess) {
     const response = h.response({
       status: "success",
-      message: "Ctatat berhasil ditambahkan",
+      message: "Catatan berhasil ditambahkan",
       data: {
         noteId: id,
       },
@@ -72,9 +72,12 @@ const getNoteByIdHandler = (request, h) => {
 
 const editNoteByIdHandler = (request, h) => {
   const { id } = request.params;
+  const { title, tags, body } = request.payload; // Diperbaiki typo "playload"
+  const updatedAt = new Date().toISOString(); // Diperbaiki typo "updateAt"
 
-  const { title, tags, body } = request.playload;
-  const updateAt = new Date().toISOString();
+  // Debugging logs
+  console.log("params", request.params);
+  console.log("payload", request.payload);
 
   const index = notes.findIndex((note) => note.id === id);
 
@@ -84,7 +87,7 @@ const editNoteByIdHandler = (request, h) => {
       title,
       tags,
       body,
-      updateAt,
+      updatedAt, // Diperbaiki typo "updateAt"
     };
 
     const response = h.response({
